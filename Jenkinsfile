@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    tools {
-        nodejs 'nodejs' // Assumes NodeJS plugin with 'Node16' installation configured
-    }
+
     stages {
         stage('Checkout') {
             steps {
