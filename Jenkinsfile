@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/chiemek/WorkTeams-FE.git'
+                git branch: 'main', url: 'https://github.com/chiemek/WorkTeams-FE.git', credentialsId: 'github-credentials'
             }
         }
         stage('Install Dependencies') {
