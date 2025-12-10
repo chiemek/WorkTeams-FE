@@ -46,6 +46,19 @@ jobs:
         args: --severity-threshold=high --sarif-file-output=snyk.sarif
       continue-on-error: true # Allow workflow to continue even if vulnerabilities are found
 
+    - name: Upload SARIF to GitHub
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: snyk.sarif
+
+    - name: Snyk Monitor
+      uses: snyk/actions/node@master
+      with:
+        command: monitor
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+
       # Run SonarQube scan
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v6
@@ -60,4 +73,5 @@ jobs:
         -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info            
         -Dsonar.exclusions=node_modules/**,dist/**            
         -Dsonar.qualitygate.wait=true
+        -Dsonar.branch.name=main
       continue-on-error: true
